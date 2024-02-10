@@ -17,6 +17,7 @@ public class CourseService {
 
     private CourseRepository courseRepository;
 
+    @Autowired
     public CourseService(CourseRepository courseRepository){
         this.courseRepository = courseRepository;
     }

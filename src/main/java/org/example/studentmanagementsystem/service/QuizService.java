@@ -2,8 +2,12 @@ package org.example.studentmanagementsystem.service;
 
 import org.example.studentmanagementsystem.entity.Course;
 import org.example.studentmanagementsystem.entity.Quiz;
+import org.example.studentmanagementsystem.entity.Student;
 import org.example.studentmanagementsystem.repository.CourseRepository;
 import org.example.studentmanagementsystem.repository.QuizRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,32 +18,39 @@ public class QuizService {
 
     private QuizRepository quizRepository;
 
+    @Autowired
     public QuizService(QuizRepository quizRepository){
         this.quizRepository = quizRepository;
     }
 
-    public void save(Quiz quiz){
+    public ResponseEntity<Quiz> save(Quiz quiz){
         quizRepository.save(quiz);
+        return new ResponseEntity<>(quiz, HttpStatus.CREATED);
     }
 
-    public Quiz findById(int id){
+    public ResponseEntity<Quiz> findById(int id){
         Quiz quiz = quizRepository.findById(id);
-        if(quiz == null){
-            throw new NullPointerException("Quiz of id " + id + " doesn't exist");
+        if (quiz == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return quiz;
+        return new ResponseEntity<>(quiz, HttpStatus.OK);
 
     }
 
-    public void delete(int id){
+    public ResponseEntity<Void> delete(int id){
+        if(quizRepository.findById(id) == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         quizRepository.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public List<Quiz> findAll(){
+    public ResponseEntity<List<Quiz>> findAll(){
         List<Quiz> quizzes = quizRepository.findAll();
-        if(quizzes == null)
-            throw new NullPointerException("List of quizzes is empty and currently NULL");
-        return quizzes;
+        if (quizzes.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
 
     public void update(Quiz quiz){
