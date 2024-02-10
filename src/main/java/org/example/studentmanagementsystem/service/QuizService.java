@@ -5,6 +5,7 @@ import org.example.studentmanagementsystem.entity.Quiz;
 import org.example.studentmanagementsystem.entity.Student;
 import org.example.studentmanagementsystem.repository.CourseRepository;
 import org.example.studentmanagementsystem.repository.QuizRepository;
+import org.example.studentmanagementsystem.repository.QuizRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +56,9 @@ public class QuizService {
 
     public void update(Quiz quiz){
         quizRepository.update(quiz);
+    }
+
+    public void setQuizRepository(QuizRepositoryImpl quizRepository) {
+        this.quizRepository = quizRepository;
     }
 }

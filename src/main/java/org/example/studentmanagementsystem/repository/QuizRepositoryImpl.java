@@ -51,4 +51,8 @@ public class QuizRepositoryImpl implements QuizRepository{
         List<Quiz> quizzes = entityManager.createQuery("SELECT q FROM Quiz q", Quiz.class).getResultList();
         return quizzes;
     }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

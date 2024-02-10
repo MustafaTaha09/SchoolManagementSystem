@@ -5,6 +5,7 @@ import org.example.studentmanagementsystem.entity.Student;
 import org.example.studentmanagementsystem.entity.Teacher;
 import org.example.studentmanagementsystem.repository.QuizRepository;
 import org.example.studentmanagementsystem.repository.TeacherRepository;
+import org.example.studentmanagementsystem.repository.TeacherRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,5 +54,9 @@ public class TeacherService {
 
     public void update(Teacher teacher){
         teacherRepository.update(teacher);
+    }
+
+    public void setTeacherRepository(TeacherRepositoryImpl teacherRepository) {
+        this.teacherRepository = teacherRepository;
     }
 }

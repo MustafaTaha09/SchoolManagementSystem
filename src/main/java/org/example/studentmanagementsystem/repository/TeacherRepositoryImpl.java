@@ -50,4 +50,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         List<Teacher> teachers = entityManager.createQuery("SELECT t FROM Teacher t", Teacher.class).getResultList();
         return teachers;
     }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

@@ -41,16 +41,59 @@
     <tx:annotation-driven/>
 
     <!-- Repository Beans -->
-    <bean id="studentRepository" class="org.example.studentmanagementsystem.repository.TeacherRepositoryImpl"/>
-    <bean id="courseRepository" class="org.example.studentmanagementsystem.repository.CourseRepositoryImpl"/>
-    <bean id="teacherRepository" class="org.example.studentmanagementsystem.repository.QuizRepositoryImpl"/>
-    <bean id="quizRepository" class="org.example.studentmanagementsystem.repository.StudentRepositoryImpl"/>
+<!--    <bean id="studentRepository" class="org.example.studentmanagementsystem.repository.TeacherRepositoryImpl"/>-->
+<!--    <bean id="courseRepository" class="org.example.studentmanagementsystem.repository.CourseRepositoryImpl"/>-->
+<!--    <bean id="teacherRepository" class="org.example.studentmanagementsystem.repository.QuizRepositoryImpl"/>-->
+<!--    <bean id="quizRepository" class="org.example.studentmanagementsystem.repository.StudentRepositoryImpl"/>-->
 
     <!-- Service Beans -->
-    <bean id="studentService" class="org.example.studentmanagementsystem.service.TeacherService"/>
-    <bean id="courseService" class="org.example.studentmanagementsystem.service.CourseService"/>
-    <bean id="teacherService" class="org.example.studentmanagementsystem.service.QuizService"/>
-    <bean id="quizService" class="org.example.studentmanagementsystem.service.StudentService"/>
+<!--    <bean id="studentService" class="org.example.studentmanagementsystem.service.TeacherService"/>-->
+<!--    <bean id="courseService" class="org.example.studentmanagementsystem.service.CourseService"/>-->
+<!--    <bean id="teacherService" class="org.example.studentmanagementsystem.service.QuizService"/>-->
+<!--    <bean id="quizService" class="org.example.studentmanagementsystem.service.StudentService"/>-->
+
+
+                    <!--    This is not working for some reason   -->
+    <!--
+    <bean id="entityManager" factory-bean="entityManagerFactory" factory-method="createEntityManager"/>
+    -->
+
+    <bean id="studentRepository" class="org.example.studentmanagementsystem.repository.StudentRepositoryImpl">
+        <property name="entityManager" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="courseRepository" class="org.example.studentmanagementsystem.repository.CourseRepositoryImpl">
+        <property name="entityManager" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="quizRepository" class="org.example.studentmanagementsystem.repository.QuizRepositoryImpl">
+        <property name="entityManager" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="teacherRepository" class="org.example.studentmanagementsystem.repository.TeacherRepositoryImpl">
+        <property name="entityManager" ref="entityManagerFactory"/>
+    </bean>
+
+
+    <bean id="studentService" class="org.example.studentmanagementsystem.service.StudentService">
+        <property name="studentRepository" ref="studentRepositoryImpl"/>
+    </bean>
+
+    <bean id="courseService" class="org.example.studentmanagementsystem.service.CourseService">
+        <property name="courseRepository" ref="courseRepositoryImpl"/>
+    </bean>
+
+    <bean id="teacherService" class="org.example.studentmanagementsystem.service.TeacherService">
+        <property name="teacherRepository" ref="teacherRepositoryImpl"/>
+    </bean>
+
+    <bean id="quizService" class="org.example.studentmanagementsystem.service.QuizService">
+        <property name="quizRepository" ref="quizRepositoryImpl"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    </bean>
+
 
     <!-- MVC Configuration -->
     <context:component-scan base-package="org.example.studentmanagementsystem"/>

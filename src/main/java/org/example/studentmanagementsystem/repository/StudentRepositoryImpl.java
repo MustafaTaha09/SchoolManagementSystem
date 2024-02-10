@@ -49,4 +49,8 @@ public class StudentRepositoryImpl implements StudentRepository{
         List<Student> students = entityManager.createQuery("SELECT s FROM Student s", Student.class).getResultList();
         return students;
     }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

@@ -51,4 +51,8 @@ public class CourseRepositoryImpl implements CourseRepository{
         List<Course> courses = entityManager.createQuery("SELECT s FROM Course s", Course.class).getResultList();
         return courses;
     }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

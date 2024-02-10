@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import org.example.studentmanagementsystem.entity.Course;
 import org.example.studentmanagementsystem.entity.Student;
 import org.example.studentmanagementsystem.repository.CourseRepository;
+import org.example.studentmanagementsystem.repository.CourseRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,5 +55,9 @@ public class CourseService {
 
     public void update(Course course){
         courseRepository.update(course);
+    }
+
+    public void setCourseRepository(CourseRepositoryImpl courseRepository) {
+        this.courseRepository = courseRepository;
     }
 }
