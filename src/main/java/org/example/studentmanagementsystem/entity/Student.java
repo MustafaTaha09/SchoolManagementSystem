@@ -20,7 +20,9 @@ public class Student {
 
     private String name;
     private int age;
+    @Column(unique = true, nullable = false)
     private String email;
+    @Column(unique = true, nullable = false)
     private String collegeId;
     private double gpa;
 

@@ -17,6 +17,7 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(unique = true, nullable = false)
     private String title;
 
     @ManyToMany(mappedBy = "quizzes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

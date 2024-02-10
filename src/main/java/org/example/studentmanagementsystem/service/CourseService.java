@@ -39,10 +39,10 @@ public class CourseService {
     public List<Course> findAll(){
         List<Course> courses = courseRepository.findAll();
         if(courses == null)
-            throw new NullPointerException("List of students is empty and currently NULL");
+            throw new NullPointerException("List of courses is empty and currently NULL");
         return courses;
     }
-//ss
+
     public void update(Course course){
         courseRepository.update(course);
     }
