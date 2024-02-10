@@ -21,6 +21,9 @@ public class Teacher {
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Course> courses;
 
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+    private List<Quiz> quizzes;
+
     public Teacher() {
         courses = new ArrayList<>();
     }
