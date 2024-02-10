@@ -33,7 +33,8 @@ public class StudentService {
     }
 
     public ResponseEntity<Void> delete(int id){
-        Student student = studentRepository.findById(id);
+       if(studentRepository.findById(id) == null)
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         studentRepository.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

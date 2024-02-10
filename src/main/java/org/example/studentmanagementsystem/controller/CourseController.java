@@ -1,6 +1,7 @@
 package org.example.studentmanagementsystem.controller;
 
 import org.example.studentmanagementsystem.entity.Course;
+import org.example.studentmanagementsystem.entity.Student;
 import org.example.studentmanagementsystem.repository.CourseRepository;
 import org.example.studentmanagementsystem.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +21,21 @@ public class CourseController {
     // Create
     @PostMapping
     public ResponseEntity<Course> createCourse(@RequestBody Course course) { // Request entities used to better handle API Requests by manipulating the code request.
-        courseService.save(course);
-        return new ResponseEntity<>(course, HttpStatus.CREATED);
+        return courseService.save(course);
+
     }
 
     // Read
     @GetMapping("/{id}")
     public ResponseEntity<Course> getCourseById(@PathVariable("id") int id) {
-        Course course = courseService.findById(id);
-        if (course == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(course, HttpStatus.OK);
+        return courseService.findById(id);
+
     }
 
     // Update
     @PutMapping("/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable("id") int id, @RequestBody Course updatedCourse) {
-        Course existingCourse = courseService.findById(id);
+        ResponseEntity<Course> existingCourse = courseService.findById(id);
         if (existingCourse == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -49,21 +47,14 @@ public class CourseController {
     // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable("id") int id) {
-        Course course = courseService.findById(id);
-        if (course == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        courseService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return courseService.delete(id);
+
     }
 
     // Retrieve all courses
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses() {
-        List<Course> courses = courseService.findAll();
-        if (courses.isEmpty()) { // Handling DB transaction in case it came back empty.
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Better handle the exception with NO_CONTENT for the API request.
-        }
-        return new ResponseEntity<>(courses, HttpStatus.OK); // Data were retrieved Successfully.
+        return courseService.findAll();
+
     }
 }
