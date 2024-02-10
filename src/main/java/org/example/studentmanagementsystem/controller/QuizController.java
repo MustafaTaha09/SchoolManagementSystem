@@ -2,6 +2,7 @@ package org.example.studentmanagementsystem.controller;
 
 import org.example.studentmanagementsystem.entity.Quiz;
 import org.example.studentmanagementsystem.repository.QuizRepository;
+import org.example.studentmanagementsystem.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,19 +15,19 @@ import java.util.List;
 public class QuizController {
 
     @Autowired
-    private QuizRepository quizRepository;
+    private QuizService quizService;
 
     // Create
     @PostMapping
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
-        quizRepository.save(quiz);
+        quizService.save(quiz);
         return new ResponseEntity<>(quiz, HttpStatus.CREATED);
     }
 
     // Read
     @GetMapping("/{id}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable("id") int id) {
-        Quiz quiz = quizRepository.findById(id);
+        Quiz quiz = quizService.findById(id);
         if (quiz == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -36,30 +37,30 @@ public class QuizController {
     // Update
     @PutMapping("/{id}")
     public ResponseEntity<Quiz> updateQuiz(@PathVariable("id") int id, @RequestBody Quiz updatedQuiz) {
-        Quiz existingQuiz = quizRepository.findById(id);
+        Quiz existingQuiz = quizService.findById(id);
         if (existingQuiz == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         updatedQuiz.setId(id); // Ensure the ID is set to the correct value
-        quizRepository.update(updatedQuiz);
+        quizService.update(updatedQuiz);
         return new ResponseEntity<>(updatedQuiz, HttpStatus.OK);
     }
 
     // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteQuiz(@PathVariable("id") int id) {
-        Quiz quiz = quizRepository.findById(id);
+        Quiz quiz = quizService.findById(id);
         if (quiz == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        quizRepository.delete(id);
+        quizService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // Retrieve all quizzes
     @GetMapping
     public ResponseEntity<List<Quiz>> getAllQuizzes() {
-        List<Quiz> quizzes = quizRepository.findAll();
+        List<Quiz> quizzes = quizService.findAll();
         if (quizzes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

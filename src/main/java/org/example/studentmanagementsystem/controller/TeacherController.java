@@ -2,6 +2,7 @@ package org.example.studentmanagementsystem.controller;
 
 import org.example.studentmanagementsystem.entity.Teacher;
 import org.example.studentmanagementsystem.repository.TeacherRepository;
+import org.example.studentmanagementsystem.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,19 +15,19 @@ import java.util.List;
 public class TeacherController {
 
     @Autowired
-    private TeacherRepository teacherRepository;
+    private TeacherService teacherService;
 
     // Create
     @PostMapping
     public ResponseEntity<Teacher> createTeacher(@RequestBody Teacher teacher) {
-        teacherRepository.save(teacher);
+        teacherService.save(teacher);
         return new ResponseEntity<>(teacher, HttpStatus.CREATED);
     }
 
     // Read
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> getTeacherById(@PathVariable("id") int id) {
-        Teacher teacher = teacherRepository.findById(id);
+        Teacher teacher = teacherService.findById(id);
         if (teacher == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -36,30 +37,30 @@ public class TeacherController {
     // Update
     @PutMapping("/{id}")
     public ResponseEntity<Teacher> updateTeacher(@PathVariable("id") int id, @RequestBody Teacher updatedTeacher) {
-        Teacher existingTeacher = teacherRepository.findById(id);
+        Teacher existingTeacher = teacherService.findById(id);
         if (existingTeacher == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         updatedTeacher.setId(id); // Ensure the ID is set to the correct value
-        teacherRepository.update(updatedTeacher);
+        teacherService.update(updatedTeacher);
         return new ResponseEntity<>(updatedTeacher, HttpStatus.OK);
     }
 
     // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTeacher(@PathVariable("id") int id) {
-        Teacher teacher = teacherRepository.findById(id);
+        Teacher teacher = teacherService.findById(id);
         if (teacher == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        teacherRepository.delete(id);
+        teacherService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // Retrieve all teachers
     @GetMapping
     public ResponseEntity<List<Teacher>> getAllTeachers() {
-        List<Teacher> teachers = teacherRepository.findAll();
+        List<Teacher> teachers = teacherService.findAll();
         if (teachers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
