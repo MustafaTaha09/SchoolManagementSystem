@@ -20,24 +20,19 @@ public class TeacherController {
     // Create
     @PostMapping
     public ResponseEntity<Teacher> createTeacher(@RequestBody Teacher teacher) {
-        teacherService.save(teacher);
-        return new ResponseEntity<>(teacher, HttpStatus.CREATED);
+        return teacherService.save(teacher);
     }
 
     // Read
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> getTeacherById(@PathVariable("id") int id) {
-        Teacher teacher = teacherService.findById(id);
-        if (teacher == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(teacher, HttpStatus.OK);
+        return teacherService.findById(id);
     }
 
     // Update
     @PutMapping("/{id}")
     public ResponseEntity<Teacher> updateTeacher(@PathVariable("id") int id, @RequestBody Teacher updatedTeacher) {
-        Teacher existingTeacher = teacherService.findById(id);
+        ResponseEntity<Teacher> existingTeacher = teacherService.findById(id);
         if (existingTeacher == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -49,21 +44,12 @@ public class TeacherController {
     // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTeacher(@PathVariable("id") int id) {
-        Teacher teacher = teacherService.findById(id);
-        if (teacher == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        teacherService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return teacherService.delete(id);
     }
 
     // Retrieve all teachers
     @GetMapping
     public ResponseEntity<List<Teacher>> getAllTeachers() {
-        List<Teacher> teachers = teacherService.findAll();
-        if (teachers.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(teachers, HttpStatus.OK);
+        return teacherService.findAll();
     }
 }
