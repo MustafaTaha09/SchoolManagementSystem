@@ -20,24 +20,21 @@ public class StudentController {
     // Create
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        studentService.save(student);
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
+        return studentService.save(student);
+
     }
 
     // Read
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id") int id) {
-        Student student = studentService.findById(id);
-        if (student == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(student, HttpStatus.OK);
+        return studentService.findById(id);
+
     }
 
     // Update
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable("id") int id, @RequestBody Student updatedStudent) {
-        Student existingStudent = studentService.findById(id);
+        ResponseEntity<Student> existingStudent = studentService.findById(id);
         if (existingStudent == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -49,22 +46,13 @@ public class StudentController {
     // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable("id") int id) {
-        Student student = studentService.findById(id);
-        if (student == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        studentService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return studentService.delete(id);
     }
 
     // Retrieve all students
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
-        List<Student> students = studentService.findAll();
-        if (students.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(students, HttpStatus.OK);
+        return studentService.findAll();
     }
 }
 

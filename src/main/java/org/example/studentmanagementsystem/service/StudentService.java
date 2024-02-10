@@ -4,6 +4,8 @@ import org.example.studentmanagementsystem.entity.Student;
 import org.example.studentmanagementsystem.entity.Teacher;
 import org.example.studentmanagementsystem.repository.StudentRepository;
 import org.example.studentmanagementsystem.repository.StudentRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,28 +18,33 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public void save(Student student){
+    public ResponseEntity<Student> save(Student student){
         studentRepository.save(student);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
-    public Student findById(int id){
+    public ResponseEntity<Student> findById(int id){
         Student student = studentRepository.findById(id);
-        if(student == null){
-            throw new NullPointerException("student of id " + id + " doesn't exist");
+        if (student == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return student;
+        return new ResponseEntity<>(student, HttpStatus.OK);
 
     }
 
-    public void delete(int id){
+    public ResponseEntity<Void> delete(int id){
+        Student student = studentRepository.findById(id);
+
         studentRepository.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public List<Student> findAll(){
+    public ResponseEntity<List<Student>> findAll(){
         List<Student> students = studentRepository.findAll();
-        if(students == null)
-            throw new NullPointerException("List of teachers is empty and currently NULL");
-        return students;
+        if (students.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     public void update(Student student){
