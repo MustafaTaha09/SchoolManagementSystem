@@ -17,5 +17,5 @@ A School Management System that handles the Data of Studenets, Courses, Quizes a
 
 ### Notes
 Project can be implemented using other ways like:
-- Using Spring Data JPA which gives us the Utilities of the CRUD operations to reduce code redunancy.
+- Using Spring Data JPA which gives us the Utilities of the JPA repository built in CRUD operations.
 - Using Spring Data REST which allows us to utilize all CRUD endpoints with no implementation of our side.
